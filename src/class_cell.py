@@ -35,3 +35,15 @@ class Cell:
             self._win.draw_line(Line(top_left, top_right))
         if self.has_bottom_wall:
             self._win.draw_line(Line(bottom_left, bottom_right))
+
+    def draw_move(self, to_cell, undo=False):
+        self_x = self._x1 + (abs(self._x2 - self._x1) // 2)
+        self_y = self._y1 + (abs(self._y2 - self._y1) // 2)
+        target_x = to_cell._x1 + (abs(to_cell._x2 - to_cell._x1) // 2)
+        target_y = to_cell._y1 + (abs(to_cell._y2 - to_cell._y1) // 2)
+
+        line_color = "#908caa" if undo else "#eb6f92"
+
+        self._win.draw_line(
+            Line(Point(self_x, self_y), Point(target_x, target_y)), line_color
+        )
