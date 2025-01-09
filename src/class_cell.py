@@ -2,7 +2,7 @@ from src.class_window import Line, Point
 
 
 class Cell:
-    def __init__(self, window):
+    def __init__(self, window=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -24,14 +24,23 @@ class Cell:
         bottom_left = Point(x1, y2)
         bottom_right = Point(x2, y2)
 
-        if self.has_left_wall:
-            self._win.draw_line(Line(top_left, bottom_left))
-        if self.has_right_wall:
-            self._win.draw_line(Line(top_right, bottom_right))
-        if self.has_top_wall:
-            self._win.draw_line(Line(top_left, top_right))
-        if self.has_bottom_wall:
-            self._win.draw_line(Line(bottom_left, bottom_right))
+        if self._win is not None:
+            if self.has_left_wall:
+                self._win.draw_line(Line(top_left, bottom_left))
+            else:
+                self._win.draw_line(Line(top_left, bottom_left), "#191724")
+            if self.has_right_wall:
+                self._win.draw_line(Line(top_right, bottom_right))
+            else:
+                self._win.draw_line(Line(top_right, bottom_right), "#191724")
+            if self.has_top_wall:
+                self._win.draw_line(Line(top_left, top_right))
+            else:
+                self._win.draw_line(Line(top_left, top_right), "#191724")
+            if self.has_bottom_wall:
+                self._win.draw_line(Line(bottom_left, bottom_right))
+            else:
+                self._win.draw_line(Line(bottom_left, bottom_right), "#191724")
 
     def draw_move(self, to_cell, undo=False):
         self_x = self._x1 + (abs(self._x2 - self._x1) // 2)
@@ -41,6 +50,7 @@ class Cell:
 
         line_color = "#908caa" if undo else "#eb6f92"
 
-        self._win.draw_line(
-            Line(Point(self_x, self_y), Point(target_x, target_y)), line_color
-        )
+        if self._win is not None:
+            self._win.draw_line(
+                Line(Point(self_x, self_y), Point(target_x, target_y)), line_color
+            )

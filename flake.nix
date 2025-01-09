@@ -15,6 +15,11 @@
         #!${pkgs.bash}/bin/bash
         PYTHONPATH=$PYTHONPATH:. ${pkgs.python312Full}/bin/python3 -m src.main
       '';
+
+      testScript = pkgs.writeScriptBin "tests" ''
+	#!${pkgs.bash}/bin/bash
+	PYTHONPATH=$PYTHONPATH. ${pkgs.python312Full}/bin/python3 -m unittest discover -s tests
+      '';
     in 
   {
     # pakages.default = mainPackage;
@@ -25,6 +30,7 @@
         pkgs.black
         pkgs.pyright
         buildScript
+	testScript
       ];
 
       shellHook = ''
