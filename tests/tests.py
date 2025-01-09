@@ -30,8 +30,8 @@ class Tests(unittest.TestCase):
         num_rows = 2
         maze = Maze(0, 0, num_rows, num_cols, 1, 1)
         self.assertEqual(maze._cells[0][0].has_top_wall, False)
-        
-    def test_maze_entrance_removal(self):
+
+    def test_maze_exit_removal(self):
         num_cols = 2
         num_rows = 2
         maze = Maze(0, 0, num_rows, num_cols, 1, 1)
