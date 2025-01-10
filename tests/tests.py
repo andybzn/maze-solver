@@ -1,5 +1,5 @@
+# pyright: strict, reportPrivateUsage=false
 import unittest
-
 from src.class_maze import Maze
 
 
@@ -39,4 +39,4 @@ class Tests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  # pyright:ignore[reportUnusedCallResult]

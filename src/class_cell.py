@@ -1,28 +1,29 @@
-from src.class_window import Line, Point
+from __future__ import annotations
+from src.class_window import Window, Line, Point
 
 
 class Cell:
-    def __init__(self, window=None):
-        self.has_left_wall = True
-        self.has_right_wall = True
-        self.has_top_wall = True
-        self.has_bottom_wall = True
-        self.visited = False
-        self._x1 = 0
-        self._y1 = 0
-        self._x2 = 0
-        self._y2 = 0
-        self._win = window
+    def __init__(self, window: Window | None = None):
+        self.has_left_wall: bool = True
+        self.has_right_wall: bool = True
+        self.has_top_wall: bool = True
+        self.has_bottom_wall: bool = True
+        self.visited: bool = False
+        self._x1: int = 0
+        self._y1: int = 0
+        self._x2: int = 0
+        self._y2: int = 0
+        self._win: Window | None = window
 
-    def draw(self, x1, y1, x2, y2):
+    def draw(self, x1: int, y1: int, x2: int, y2: int) -> None:
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
         self._y2 = y2
-        top_left = Point(x1, y1)
-        top_right = Point(x2, y1)
-        bottom_left = Point(x1, y2)
-        bottom_right = Point(x2, y2)
+        top_left: Point = Point(x1, y1)
+        top_right: Point = Point(x2, y1)
+        bottom_left: Point = Point(x1, y2)
+        bottom_right: Point = Point(x2, y2)
 
         if self._win is not None:
             if self.has_left_wall:
@@ -42,13 +43,13 @@ class Cell:
             else:
                 self._win.draw_line(Line(bottom_left, bottom_right), "#191724")
 
-    def draw_move(self, to_cell, undo=False):
-        self_x = self._x1 + (abs(self._x2 - self._x1) // 2)
-        self_y = self._y1 + (abs(self._y2 - self._y1) // 2)
-        target_x = to_cell._x1 + (abs(to_cell._x2 - to_cell._x1) // 2)
-        target_y = to_cell._y1 + (abs(to_cell._y2 - to_cell._y1) // 2)
+    def draw_move(self, to_cell: Cell, undo: bool = False) -> None:
+        self_x: int = self._x1 + (abs(self._x2 - self._x1) // 2)
+        self_y: int = self._y1 + (abs(self._y2 - self._y1) // 2)
+        target_x: int = to_cell._x1 + (abs(to_cell._x2 - to_cell._x1) // 2)
+        target_y: int = to_cell._y1 + (abs(to_cell._y2 - to_cell._y1) // 2)
 
-        line_color = "#908caa" if undo else "#eb6f92"
+        line_color: str = "#908caa" if undo else "#eb6f92"
 
         if self._win is not None:
             self._win.draw_line(
