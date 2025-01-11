@@ -37,6 +37,20 @@ class Tests(unittest.TestCase):
         maze = Maze(0, 0, num_rows, num_cols, 1, 1)
         self.assertEqual(maze._cells[num_cols - 1][num_rows - 1].has_bottom_wall, False)
 
+    def test_maze_cell_reset(self):
+        num_cols = 2
+        num_rows = 2
+        maze = Maze(0, 0, num_rows, num_cols, 1, 1)
+        self.assertListEqual(
+            [
+                maze._cells[0][0].visited,
+                maze._cells[0][1].visited,
+                maze._cells[1][0].visited,
+                maze._cells[1][1].visited,
+            ],
+            [False, False, False, False],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()  # pyright:ignore[reportUnusedCallResult]
