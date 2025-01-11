@@ -28,7 +28,7 @@
       buildInputs = [
         pkgs.python312Full
         pkgs.black
-        pkgs.pyright
+        pkgs.basedpyright
         buildScript
 	testScript
       ];
