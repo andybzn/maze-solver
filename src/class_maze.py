@@ -100,3 +100,39 @@ class Maze:
         for col in self._cells:
             for row in col:
                 row.visited = False
+
+    def solve(self) -> bool:
+        return self._solve_r(i=0, j=0)
+
+    def _solve_r(self, i: int, j: int) -> bool:
+        self._animate()
+        self._cells[i][j].visited = True
+        if i == (self._num_cols - 1) and j == (self._num_rows - 1):
+            return True
+        # check directions
+        for k, l in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+            if self._check_cell_visitability(i, j, k, l):
+                self._cells[i][j].draw_move(self._cells[k][l])
+                if self._solve_r(k, l):
+                    return True
+                else:
+                    self._cells[i][j].draw_move(self._cells[k][l], undo=True)
+        return False
+
+    def _check_cell_visitability(self, i: int, j: int, k: int, l: int) -> bool:
+        if not (0 <= k < self._num_cols) or not (0 <= l < self._num_rows):
+            return False
+        current_cell = self._cells[i][j]
+        target_cell = self._cells[k][l]
+        if target_cell.visited:
+            return False
+        # determine if there is a wall
+        if k < i and (current_cell.has_left_wall or target_cell.has_right_wall):
+            return False
+        if k > i and (current_cell.has_right_wall or target_cell.has_left_wall):
+            return False
+        if l < j and (current_cell.has_top_wall or target_cell.has_bottom_wall):
+            return False
+        if l > j and (current_cell.has_bottom_wall or target_cell.has_top_wall):
+            return False
+        return True
