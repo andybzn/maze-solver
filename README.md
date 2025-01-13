@@ -46,6 +46,7 @@ Whilst developing using `nix develop`, there are several commands available:
 
 - I learned that type annotation exist in Python, and I like Rust [insert blazingly-fast meme here], so I have used those liberally.
 - I linted this with `basedpyright`, because types.
+- The colors used in this theme are from the [Rosé Pine](https://rosepinetheme.com/) palette.
 
 ---
 
