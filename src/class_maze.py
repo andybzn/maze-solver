@@ -34,6 +34,7 @@ class Maze:
         self._reset_cells_visited()
 
     def _create_cells(self) -> None:
+        """Creates a grid of Cells. Maze width `self._num_cols` and height `self._num_rows`"""
         for _ in range(self._num_cols):
             col: list[Cell] = []
             for _ in range(self._num_rows):
@@ -44,6 +45,7 @@ class Maze:
                 self._draw_cell(i, j)
 
     def _draw_cell(self, i: int, j: int) -> None:
+        """Draws a Cell to the screen"""
         x1: int = (self._cell_size_x * i) + self._x1
         y1: int = (self._cell_size_y * j) + self._y1
         x2: int = x1 + self._cell_size_x
@@ -52,12 +54,14 @@ class Maze:
         self._animate()
 
     def _animate(self) -> None:
+        """Redraws the window if it exists"""
         if self._win is None:
             return
         self._win.redraw()
         time.sleep(0.05)
 
     def _break_entrance_and_exit(self) -> None:
+        """Removes the top wall from the top left Cell, and the bottom wall from the bottom right Cell"""
         self._cells[0][0].has_top_wall = False
         self._draw_cell(0, 0)
         exit_col: int = self._num_cols - 1
@@ -67,6 +71,7 @@ class Maze:
         self._draw_cell(exit_col, exit_row)
 
     def _break_walls_r(self, i: int, j: int) -> None:
+        """Recursively randomly breaks Cell walls between walls, starting at the provided col `i` & row `j` numbers"""
         self._cells[i][j].visited = True
         while True:
             to_visit: list[tuple[int, int]] = []
@@ -92,19 +97,23 @@ class Maze:
             self._break_walls_r(r_col, r_row)
 
     def _check_cell_breakability(self, i: int, j: int) -> bool:
+        """Helper function to determine if the Cell is valid & unvisited"""
         if (0 <= i < self._num_cols) and (0 <= j < self._num_rows):
             return self._cells[i][j].visited == False
         return False
 
     def _reset_cells_visited(self) -> None:
+        """Resets the `.visited` status of all Cells in the Maze"""
         for col in self._cells:
             for row in col:
                 row.visited = False
 
     def solve(self) -> bool:
+        """Triggers the Maze solver. Returns `False` if the Maze cannot be solved"""
         return self._solve_r(i=0, j=0)
 
     def _solve_r(self, i: int, j: int) -> bool:
+        """Recursively solves the Maze (if possible) using a DFS. If the cell is not the exit, and there is no-where to go, the function will attempt a different direction. Returns `False` if the route cannot be solved"""
         self._animate()
         self._cells[i][j].visited = True
         if i == (self._num_cols - 1) and j == (self._num_rows - 1):
@@ -120,6 +129,7 @@ class Maze:
         return False
 
     def _check_cell_visitability(self, i: int, j: int, k: int, l: int) -> bool:
+        """Helper function to determine if the next Cell (`k`,`l`) is valid, unvisited, and there are no walls between the current Cell (`i`,`j`) and the next"""
         if not (0 <= k < self._num_cols) or not (0 <= l < self._num_rows):
             return False
         current_cell = self._cells[i][j]

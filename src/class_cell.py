@@ -16,6 +16,7 @@ class Cell:
         self._win: Window | None = window
 
     def draw(self, x1: int, y1: int, x2: int, y2: int) -> None:
+        """Draws a Cell (typically square, but could be a rectangle or parallelogram) between two sets of coordinates"""
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
@@ -44,6 +45,7 @@ class Cell:
                 self._win.draw_line(Line(bottom_left, bottom_right), "#191724")
 
     def draw_move(self, to_cell: Cell, undo: bool = False) -> None:
+        """Draws a line between two Cells. If `undo == True`, the line will be a lighter color"""
         self_x: int = self._x1 + (abs(self._x2 - self._x1) // 2)
         self_y: int = self._y1 + (abs(self._y2 - self._y1) // 2)
         target_x: int = to_cell._x1 + (abs(to_cell._x2 - to_cell._x1) // 2)
