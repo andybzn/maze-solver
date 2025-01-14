@@ -50,6 +50,11 @@
           esac
         '';
 
+        lintScript = pkgs.writeScriptBin "lint" ''
+          #!${pkgs.bash}/bin/bash
+          ${pkgs.basedpyright}/bin/basedpyright .
+        '';
+
       in
       {
         packages.default = buildScript;
@@ -62,6 +67,7 @@
             buildScript
             testScript
             formatScript
+            lintScript
           ];
 
           shellHook = ''
@@ -73,6 +79,7 @@
             echo "  * tests - Execute unit tests"
             echo "  * format check - Check file formatting"
             echo "  * format fix - Format files in project"
+            echo "  * lint - Lint files with basedpyright"
 
             if [[ $SHELL != ${pkgs.zsh}/bin/zsh ]]; then
               exec ${pkgs.zsh}/bin/zsh
