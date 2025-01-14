@@ -2,6 +2,7 @@
 # Variant: Main
 # Credit: github:rose-pine | rosepinetheme.com
 
+
 class Theme:
     def __init__(self):
         self.Base: str = "#191724"

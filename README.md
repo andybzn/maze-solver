@@ -18,6 +18,9 @@ To run the maze solver:
 nix run
 ```
 
+The maze will be generated to fill the size of the window at the time the `Generate Maze` button is pressed.
+
+
 ### Developing with Nix
 
 To enter a development shell with all the necessary dependencies available:

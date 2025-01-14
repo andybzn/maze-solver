@@ -8,8 +8,8 @@ import random
 class Maze:
     def __init__(
         self,
-        x1: int,
-        y1: int,
+        x1: float,
+        y1: float,
         num_rows: int,
         num_cols: int,
         cell_size_x: int,
@@ -17,8 +17,8 @@ class Maze:
         window: Window | None = None,
         seed: int | None = None,
     ):
-        self._x1: int = x1
-        self._y1: int = y1
+        self._x1: float = x1
+        self._y1: float = y1
         self._num_rows: int = num_rows
         self._num_cols: int = num_cols
         self._cells: list[list[Cell]] = []
@@ -46,19 +46,22 @@ class Maze:
 
     def _draw_cell(self, i: int, j: int) -> None:
         """Draws a Cell to the screen"""
-        x1: int = (self._cell_size_x * i) + self._x1
-        y1: int = (self._cell_size_y * j) + self._y1
-        x2: int = x1 + self._cell_size_x
-        y2: int = y1 + self._cell_size_y
+        x1: float = (self._cell_size_x * i) + self._x1
+        y1: float = (self._cell_size_y * j) + self._y1
+        x2: float = x1 + self._cell_size_x
+        y2: float = y1 + self._cell_size_y
         self._cells[i][j].draw(x1, y1, x2, y2)
-        self._animate()
+        self._animate(True)
 
-    def _animate(self) -> None:
+    def _animate(self, fast: bool = False) -> None:
         """Redraws the window if it exists"""
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(0.05)
+        if fast:
+            time.sleep(0.01)
+        else:
+            time.sleep(0.05)
 
     def _break_entrance_and_exit(self) -> None:
         """Removes the top wall from the top left Cell, and the bottom wall from the bottom right Cell"""
